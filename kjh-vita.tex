@@ -1,14 +1,32 @@
-%%% Kieran's Vita. Full.
-%%% /Users/kjhealy/projects/vita/vita.tex
-
+%%% A template to produce a nice-looking Curriculm Vitae.
+%%%
+%%% ------------------------------------------------------------------------
+%%% Requirements (should be included in a modern tex distribution):
+%%% ------------------------------------------------------------------------
+%%% xelatex
+%%% fontspec.sty
+%%% hyperrref.sty
+%%% xunicode.sty
+%%% color.sty
+%%% url.sty
+%%% fancyhdr.sty
+%%%
+%%% ------------------------------------------------------------------------
+%%% Optional
+%%% ------------------------------------------------------------------------
+%%% git
+%%% vc.sty
+%%% Expert fonts
+%%%
 
 \documentclass[11pt]{article}
   
-%% Git version tracking
+%% Git version tracking: if you don't use git or the vc package, comment this out.
+%% If you comment it out, be sure to remove the \rfoot comment below, too.
 \input{vc}
 
 %% misc style files
-\usepackage{url,fancyhdr,revnum}
+\usepackage{url,fancyhdr}
 
 %% needed for xelatex to work
 \usepackage{fontspec}
@@ -54,12 +72,25 @@
 
 \begin{document}
 
-%% Choose fonts
+%% Choose fonts for use with xelatex
+%% Minion and Myriad are widely available, from Adobe. 
+%% Pragmata is available to buy at http://www.fsd.it/fonts/pragma.htm
+%% and is worth every penny. Any good monospace font will work fine, though.
+%% Consolas or inconsolata are good alternatives.
 \setromanfont[Mapping={tex-text},Numbers={OldStyle},Ligatures={Common}]{Minion Pro} 
 \setsansfont[Mapping=tex-text,Colour=AA0000]{Myriad Pro}
 \setmonofont[Mapping=tex-text,Scale=0.9]{Pragmata} 
 
-%% custom ampersand
+
+%%%------------------------------------------------------------------------
+%%% Local commands
+%%%------------------------------------------------------------------------
+
+%% marginal header
+\newcommand{\marginhead}[1]{\marginpar{\textsf{{\footnotesize\vspace{-1em}\flushright #1}}}}
+
+
+%% custom ampersand (font consistent with the one chosen above)
 \newcommand{\amper}{{\fontspec[Scale=.95,Colour=AA0000]{Minion Pro Medium}\selectfont\&\,}}
 
 %% No bullets on labels
@@ -107,7 +138,7 @@
 
 %% Appointments
 \medskip
-\marginpar{\textsf{{\footnotesize\vspace{-1em}\flushright Appointments}}}
+\marginhead{Appointments}
 
 \noindent\emph{Duke University \vspace{0.01in}}
 
@@ -133,7 +164,7 @@ Research School of Social Sciences.
 
 %% Education
 
-\marginpar{\textsf{{\footnotesize\vspace{-1em}\flushright Education}}}
+\marginhead{Education}
 
 \noindent\emph{Princeton University \vspace{0.01in}}
 
@@ -160,7 +191,7 @@ Research School of Social Sciences.
 \bigskip
  
 %% Publications
-\marginpar{\textsf{{\footnotesize\vspace{-0.7em}\flushright Publications}}}
+\marginhead{Publications}
 \medskip
 \noindent\emph{Book \vspace{0.01in}}
 
@@ -284,7 +315,7 @@ Zuckerman. \emph{Contemporary Sociology} 28:~210--211.
  \bigskip
 
 %% Presentations
-\marginpar{\textsf{{\footnotesize\vspace{-0.6em}\flushright Invited Talks \newline (Since 2004)}}}
+\marginhead{Invited Talks \newline (Since 2004)}
 \medskip
 
 \ind 2009. ``Specialization and Status in Philosophy.'' University of Chicago, Booth School of Business. May.
@@ -388,7 +419,7 @@ Ireland at Maynooth. April.
 
 %\newpage
 
-\marginpar{\textsf{{\footnotesize\vspace{-0.6em}\flushright Conference \newline Presentations \newline (Since 2004)}}}
+\marginhead{Conference \newline Presentations \newline (Since 2004)}
 \medskip
 
 \ind 2008. Invited speaker, ASA Culture Section 20th Anniversary Symposium, ``Culture and Economy,'' Boston, August.
@@ -468,7 +499,7 @@ Ireland at Maynooth. April.
 
 \bigskip
 
-\marginpar{\textsf{{\footnotesize\vspace{-0.6em}\flushright Grants and \newline Awards}}}
+\marginhead{Grants and \newline Awards}
 \medskip
   
 \ind 2008. Honorable Mention, American Sociological Association Section on Economic Sociology, Zelizer Distinguished Scholarship Award.
@@ -526,7 +557,7 @@ College, Cork.
 
 \newpage
 
-\marginpar{\textsf{{\footnotesize\flushright Service to the \newline Profession}}}
+\marginhead{Service to the \newline Profession}
 \medskip
 
 \medskip
