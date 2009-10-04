@@ -16,26 +16,17 @@
 %%% ------------------------------------------------------------------------
 %%% git
 %%% vc.sty
-%%% Expert fonts
+%%% Fonts
 %%%
 
 \documentclass[11pt]{article}
-  
-%% Git version tracking: if you don't use git or the vc package, comment this out.
-%% If you comment it out, be sure to remove the \rfoot comment below, too.
-\input{vc}
 
-%% misc style files
-\usepackage{url,fancyhdr}
+%%%------------------------------------------------------------------------
+%%% Metadata
+%%%------------------------------------------------------------------------
 
-%% needed for xelatex to work
-\usepackage{fontspec}
-\usepackage{xunicode}
-
-%% color 
-\usepackage[usenames,dvipsnames]{color}
-
-%% meta
+%% Change as needed. Or just add me as a coauthor. Only some of these are 
+%% used below in the hyperref declaration.
 \def\myauthor{Kieran Healy}
 \def\mytitle{Vita}
 \def\mycopyright{\myauthor}
@@ -54,8 +45,28 @@
 
 \def\myaffiliation{Duke University}
 \def\myauthor{Kieran Healy}
-\date{2008-09-10}
+\date{} % not used (revision control instead)
 \def\mykeywords{Kieran, Healy, Kieran Healy, Vita, CV, Resume, Sociology}
+
+%%%------------------------------------------------------------------------  
+%%% Git version tracking 
+%%%------------------------------------------------------------------------
+
+%% If you don't use git or the vc package, comment this out.
+%% If you comment it out, be sure to remove the \rfoot comment below, too.
+\input{vc}
+
+%%%------------------------------------------------------------------------
+%%% Required style files
+%%%------------------------------------------------------------------------
+\usepackage{url,fancyhdr}
+
+%% needed for xelatex to work
+\usepackage{fontspec}
+\usepackage{xunicode}
+
+%% color for the links 
+\usepackage[usenames,dvipsnames]{color}
 
 %% hyperlinks
 \usepackage[xetex, 
@@ -70,6 +81,9 @@
   	pdfkeywords={\mykeywords}
   	]{hyperref}
 
+%%%------------------------------------------------------------------------
+%%% Document
+%%%------------------------------------------------------------------------
 \begin{document}
 
 %% Choose fonts for use with xelatex
@@ -102,15 +116,21 @@
 \def\labelitemi{~}
 \renewcommand{\labelitemii}{~}
 
-%% page layout
+%%%------------------------------------------------------------------------
+%%% Page layout
+%%%------------------------------------------------------------------------
 \pagestyle{fancy}
 \renewcommand{\headrulewidth}{0pt}
 \fancyhead{}
 \fancyfoot{}
 \rhead{{\scriptsize\thepage}}
-\rfoot{\texttt{\scriptsize \VCRevision\ on \VCDateTEX}} % git revision info inserted via external script -- see docs for vc package for details. comment out this line if you're not using vc.
 
-%% address and contact block
+%% git revision control footer 
+\rfoot{\texttt{\scriptsize \VCRevision\ on \VCDateTEX}} % git revision info inserted via external script -- see docs for vc package for details. comment out this line if you're not using vc, and also remove the \input{vc} line above.
+
+%%%------------------------------------------------------------------------
+%%% Address and contact block
+%%%------------------------------------------------------------------------
 \begin{minipage}[t]{2.95in}
  \flushright {\footnotesize \href{http://www.soc.duke.edu}{Department of Sociology} \\ Box 90088, \\ Duke University, \\ \vspace{-0.05in} Durham, \textsc{nc} 27708}  
   
