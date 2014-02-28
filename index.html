@@ -53,8 +53,10 @@
 
     <p>I regularly get requests from people who want to see the LaTeX markup that I use to generate my Curriculum Vitae. So, here it is. 
 
-There are several latex style files and document classes available for CVs, which you can see on CTAN. While many are quite good, I find them a bit restrictive. So this file is quite minimal: it's just a template .tex file rather than a .sty or .cls file.  You should adapt and fill in with your own information. If you make stylistic modifications, I encourage you to fork the project on GitHub and make them available to others in the same way. </p><h2>Dependencies</h2>
-<p>I use Xelatex in order to access good typefaces. Xelatex is included in modern tex distributions. I use git for revision control and the vc package (available from CTAN), so the template makes reference to those. The text is set in Minon Pro, Myriad Pro and Pragmata. Remarks in the file show where to comment out or delete stuff you don't use. Xelatex is not required if you just want to access fonts in the normal way through pdflatex. In that case, remove references to the fontspec and xunicode packages and the font setup commands in the document.<br /> Some other style files also required, but are included in any modern tex distribution.</p>
+There are several latex style files and document classes available for CVs, which you can see on CTAN. While many are quite good, I find them a bit restrictive. So this file is quite minimal: it's just a template .tex file rather than a .sty or .cls file.  You should adapt and fill in with your own information. If you make stylistic modifications, I encourage you to fork the project on GitHub and make them available to others in the same way. </p>
+
+<h2>Dependencies</h2>
+<p>The template uses xelatex in order to access good typefaces. Everything is set up via the style files contained in <a href="https://github.com/kjhealy/latex-custom-kjh">latex-custom-kjh</a>.  Remarks in the file show where to comment out or delete references to packages you may not use, notably <code>vc.sty</code>. 
 <h2>Install</h2>
 <p>This is a template for a .tex document. Just compile it as normal with xelatex.</p>
 <h2>Authors</h2>
