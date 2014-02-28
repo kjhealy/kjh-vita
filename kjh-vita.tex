@@ -3,7 +3,7 @@
 %%% Most recent version is at http://kjhealy.github.com/kjh-vita
 %%%
 %%% ------------------------------------------------------------------------
-%%% Requirements (should be included in a modern tex distribution):
+%%% Requirements that are included in a modern tex distribution:
 %%% ------------------------------------------------------------------------
 %%% xelatex
 %%% fontspec.sty
@@ -12,6 +12,16 @@
 %%% color.sty
 %%% url.sty
 %%% fancyhdr.sty
+%%% memoir.cls
+%%% fontawesome.sty
+%%%
+%%% 
+%%% 
+%%% ------------------------------------------------------------------------
+%%% Requirements from https://github.com/kjhealy/latex-custom-kjh
+%%% ------------------------------------------------------------------------
+%%% org-preamble-xelatex.sty
+%%% memoir-article-styles.sty
 %%%
 %%% ------------------------------------------------------------------------
 %%% Optional
@@ -30,7 +40,10 @@
 %%% remove these as needed.
 %%%------------------------------------------------------------------------
 
-\documentclass[11pt]{article}
+\documentclass[11pt,article,oneside]{memoir}   
+\usepackage{org-preamble-xelatex} 
+\usepackage{fontawesome,url}
+
 
 %%%------------------------------------------------------------------------
 %%% Metadata
@@ -51,6 +64,7 @@
 \def\myweb{http://www.kieranhealy.org}
 \def\myphone{(919) 660-5737}
 \def\myfax{(919) 660-5623}
+\def\mytwitter{@kjhealy}
 \def\myversion{}
 \def\myrevision{}
 
@@ -69,32 +83,6 @@
 \input{vc}
 
 %%%------------------------------------------------------------------------
-%%% Required style files
-%%%------------------------------------------------------------------------
-\usepackage{url,fancyhdr}
-%%\usepackage{revnum} % for reverse-numbered publications (revnumerate environment) if needed.
-
-%% needed for xelatex to work
-\usepackage{fontspec}
-\usepackage{xunicode}
-
-%% color for the links 
-\usepackage[usenames,dvipsnames]{color}
-
-%% hyperlinks
-\usepackage[xetex, 
-	colorlinks=true,
-	urlcolor=BlueViolet,
-	plainpages=false,
-  	pdfpagelabels,
-  	bookmarksnumbered,
-  	pdftitle={\mytitle},
-  	pagebackref,
-  	pdfauthor={\myauthor},
-  	pdfkeywords={\mykeywords}
-  	]{hyperref}
-
-%%%------------------------------------------------------------------------
 %%% Document
 %%%------------------------------------------------------------------------
 \begin{document}
@@ -104,9 +92,19 @@
 %% Pragmata is available to buy at http://www.fsd.it/fonts/pragma.htm
 %% and is worth every penny. Any good monospace font will work fine, though.
 %% Consolas or inconsolata are good alternatives.
-\setromanfont[Mapping={tex-text},Numbers={OldStyle},Ligatures={Common}]{Minion Pro} 
-\setsansfont[Mapping=tex-text,Colour=AA0000]{Myriad Pro}
-\setmonofont[Mapping=tex-text,Scale=0.9]{Pragmata} 
+\setromanfont[Mapping={tex-text}, 
+	Numbers={OldStyle},
+	Ligatures={Common}]{Minion Pro}
+\setsansfont[Mapping=tex-text,
+	Ligatures={Common}, 
+	Colour=AA0000]{Unit-Medium}
+\setmonofont[Mapping=tex-text,Scale=0.72]{PragmataPro} 
+
+\newfontface\scheader[SmallCapsFont={Minion Pro},SmallCapsFeatures={Letters=SmallCaps}]{Minion Pro}
+
+\newfontface\addressblock[Mapping={tex-text}, 
+	Numbers={OldStyle},
+	Ligatures={Common}]{Minion Pro Medium Caption}
 
 
 %%%------------------------------------------------------------------------
@@ -121,8 +119,8 @@
 \newcommand{\marginhead}[1]{\marginpar{\textsf{{\footnotesize\vspace{-1em}\flushright #1}}}}
 
 
-%% custom ampersand (font consistent with the one chosen above)
-\newcommand{\amper}{{\fontspec[Scale=.95,Colour=AA0000]{Minion Pro Medium}\selectfont\&\,}}
+%% [optional] custom ampersand (font consistent with the one chosen above)
+% \newcommand{\amper}{{\fontspec[Scale=.95,Colour=AA0000]{Minion Pro Medium}\selectfont\&\,}}
 
 %% No bullets on labels
 \renewcommand{\labelitemi}{~} 
@@ -136,20 +134,20 @@
 %%%------------------------------------------------------------------------
 %%% Page layout
 %%%------------------------------------------------------------------------
-\pagestyle{fancy}
-\renewcommand{\headrulewidth}{0pt}
-\fancyhead{}
-\fancyfoot{}
-\rhead{{\scriptsize\thepage}}
 
-%% git revision control footer 
-\rfoot{\texttt{\scriptsize \VCRevision\ on \VCDateTEX}} % git revision info inserted via external script -- see docs for vc package for details. comment out this line if you're not using vc, and also remove the \input{vc} line above.
+% These lines will insert git revision info in the footer, using the vc
+% package---see docs for vc package for details. Comment out this line
+% if you're not using vc, and also remove the \input{vc} line above.
+\pagestyle{kjh}
+\thispagestyle{kjhgit}
+
 
 %%%------------------------------------------------------------------------
 %%% Address and contact block
 %%%------------------------------------------------------------------------
 \begin{minipage}[t]{2.95in}
- \flushright {\footnotesize \href{http://www.soc.duke.edu}{Department of Sociology} \\ Box 90088, \\ Duke University, \\ \vspace{-0.05in} Durham, \textsc{nc} 27708}  
+ \flushright {\footnotesize 
+ \href{http://sociology.duke.edu}{Department of Sociology}, \\ Box 90088, \\ Duke University, \\ \vspace{-0.05in} Durham, \textsc{nc} 27708.}  
   
 \end{minipage}
 \hfill     
@@ -157,83 +155,73 @@
 % dummy (needed here)
 %\end{minipage}
 \hfill
-\begin{minipage}[t]{1.7in}
-  \flushright \footnotesize Phone: \myphone \\ 
-  Fax: \myfax  \\ 
-  {\scriptsize  \texttt{\href{mailto:\myemail}{\myemail}}} \\
-  {\scriptsize  \texttt{\href{\myweb}{\myweb}}}
+\begin{minipage}[t]{1.3in}
+  \flushright \footnotesize  \addressblock \myphone \, \faPhone \\ 
+  {\scriptsize  \texttt{\href{http://twitter.com/kjhealy}{\mytwitter}} \, \faTwitter }  \\ 
+  {\scriptsize  \texttt{\href{mailto:\myemail}{\myemail}} \, \faEnvelope} \\
+  {\scriptsize  \texttt{\href{\myweb}{\myweb}} \, \faGlobe}
 \end{minipage}
-
 
 \medskip
 
 %% Name 
-\noindent{\Large {\textsc{kieran healy}}}
+\noindent{\LARGE\scheader \textsc{kieran healy}}
 \reversemarginpar
 
-\medskip       
+\bigskip       
+
 
 %% Appointments
-\medskip
-\marginhead{Appointments}
+% \medskip
+\marginhead{\sffamily appointments}
 
-\noindent\emph{Duke University \vspace{0.01in}}
+\ind Associate Professor in Sociology and the Kenan Institute for Ethics, Duke University, 2009--Present.      
 
-\ind 2009--Present. Associate Professor in Sociology and the Kenan Institute for Ethics.      
+\ind Visiting Associate Professor of Sociology, Duke University, 2008--2009.
 
-\ind 2008--2009. Visiting Associate Professor of Sociology.
+\ind Associate Professor of Sociology, University of Arizona, 2008.
 
-\medskip
-\noindent\emph{University of Arizona \vspace{0.01in}}
+\ind Research Fellow, Social and Political Theory Program,
+Research School of Social Sciences, Australian National University, 2003--2006.
 
-\ind 2008. Associate Professor of Sociology.
-
-\ind 2001--2008. Assistant Professor of Sociology.
-
-\medskip
-
-\noindent\emph{Australian National University \vspace{0.01in}}
-
-\ind 2003--2006. Research Fellow, Social and Political Theory Program,
-Research School of Social Sciences.
+\ind Assistant Professor of Sociology, University of Arizona, 2001--2008.
 
 \bigskip
 
 %% Education
 
-\marginhead{Education}
+\marginhead{\sffamily {{\vskip -0.23em} education}}
 
-\noindent\emph{Princeton University \vspace{0.01in}}
+%\noindent\emph{Princeton University \vspace{0.01in}}
 
-\ind 2001. Ph.D, Sociology. % Dissertation: \emph{Exchange in Blood and
-%   Organs}. %\vspace{-0.1in}  
+\ind Ph.D, Sociology, Princeton University, 2001.
 
-% \begin{itemize}
-% 	\item \small Winner of the American Sociological Association's Dissertation
-% 	  Award for 2002.
-% \end{itemize}      
+\ind \hspace{0.35in} \footnotesize Dissertation: \emph{Exchange in Blood and Organs}.\newline Winner, American Sociological Association's Dissertation Award.\normalsize \vspace{0.05in}
 
+\ind M.A., Sociology, Princeton University, 1998. 
 
-\ind 1998. M.A., Sociology. (General Examinations with Distinction.)
+%\medskip
+%\noindent\emph{National University of Ireland (Cork)\vspace{0.02in}}
 
+\ind M.A., Sociology, First Class, National University of Ireland (Cork), 1994.
 
-\medskip
-\noindent\emph{National University of Ireland (Cork)\vspace{0.02in}}
+\ind \hspace{0.35in} \footnotesize Thesis: \emph{The Language of Influence: Public Debate and the Politics of the X-case.} \normalsize \vspace{0.01in}
 
-\ind 1994. M.A., Sociology. (First Class Honors.) \vspace{0.01in}
-
-
-\ind 1993. B.A., Sociology and Geography. (Joint First Class Honors.) 
+\ind B.A. (Joint Hons.), First Class, National University of Ireland (Cork), 1993.
 
 \bigskip
  
 %% Publications
-\marginhead{{\vskip 0.3em}Publications}
+\marginhead{\sffamily {\vskip 0.35em} publications}
 \medskip
 \noindent\emph{Book \vspace{0.01in}}
 
-\ind  Kieran Healy. 2006. \emph{\href{http://www.lastbestgifts.com}{Last Best Gifts: Altruism and the Market for Human Blood and Organs}}. Chicago:~University of Chicago Press. \vspace{-0.075in}
- 
+\ind  Kieran Healy. 2006. \emph{\href{http://www.lastbestgifts.com}{Last Best Gifts: Altruism and the Market for Human Blood and Organs}}. Chicago:~University of Chicago Press. \vspace{0.05in}
+
+\ind \hspace{0.35in} \footnotesize Winner, Association for Research on Nonprofit Organizations and Voluntary Action (ARNOVA) Outstanding Book Prize. Finalist, C. Wright Mills Award. 
+
+\vspace{-0.075in}
+
 \normalsize
 
 \bigskip
@@ -243,6 +231,14 @@ Research School of Social Sciences.
 %% (Include it above in the preamble).
 %% \renewcommand{\labelenumi}{\textsc{a}\theenumi.}
 %% \begin{revnumerate}
+
+\ind Forthcoming. Kieran Healy and James Moody. ``Data Visualization in Sociology.'' \emph{Annual Review of Sociology.}
+
+\ind Marion Fourcade and Kieran Healy. 2013. ``\href{http://kieranhealy.org/files/papers/classification-situations.pdf}{Classification Situations: Life-chances in the Neoliberal Era}.'' \emph{Accounting, Organizations, and Society} 38:~559--572.
+
+\ind Kieran Healy and Kimberly R. Krawiec. 2012. ``\href{http://kieranhealy.org/files/papers/custom-contract-kidney.pdf}{Custom, Contract, and Kidney Exchange}.'' \emph{Duke Law Journal} 62:~645--670. 
+
+\ind Kieran Healy. 2011. ``Counting and Commodifying.'' \emph{Washington University Journal of Law and Policy}. 35:~337--347.
 
 \ind Marion Fourcade and Kieran Healy. 2007. ``\href{http://arjournals.annualreviews.org/doi/pdf/10.1146/annurev.soc.33.040406.131642}{Moral Views of Market Society}.'' \emph{Annual Review of Sociology} 33:~285--311. 
 
@@ -259,10 +255,10 @@ Research School of Social Sciences.
 
 
 \ind Kieran Healy. 2000. ``\href{http://www.kieranhealy.org/files/papers/embed-alt.pdf}{Embedded Altruism: Blood Collection Regimes and the European
-  Union's Donor Population}.'' \emph{American Journal of Sociology} 105:~1633--\,1657.
+  Union's Donor Population}.'' \emph{American Journal of Sociology} 105:~1633--1657.
 
 
-\ind Kieran Healy. 1999.  ``\href{http://www.kieranhealy.org/files/papers/ts.pdf}{The Emergence of \textsc{hiv} in the U.S. Blood Supply: Organizations,
+\ind Kieran Healy. 1999.  ``\href{http://www.kieranhealy.org/files/papers/ts.pdf}{The Emergence of HIV in the U.S. Blood Supply: Organizations,
   Obligations and the Management of Uncertainty}.'' \emph{Theory and Society} 28:~529--558.
 
 
@@ -301,15 +297,21 @@ Industrialized Democracies, 1965--1993,'' in \emph{Unemployment in the New
 \emph{Social Policy in Ireland: Principles, Practice and Problems}, edited by
 Se\'{a}n Healy and Brigid Reynolds. Dublin: Oak Tree Press, 59--83.
 
+
 %\end{revnumerate}
 
 \bigskip 
- 
+
 %\newpage
-\noindent\emph{Reviews and other occasional writing \vspace{0.05in}}
+\noindent\emph{Essays and reviews \vspace{0.05in}}
 
 %\renewcommand{\labelenumi}{\textsc{r}\theenumi.}
 %\begin{revnumerate}
+
+\ind Kieran Healy. 2011. ``\href{http://www.kieranhealy.org/files/reviews/karpik-review.pdf}{Judgment and Distinction}.'' \emph{Socio--Economic Review} 9:~787--800. 
+
+\ind Kieran Healy. 2011. ``\href{http://polmeth.wustl.edu/methodologist/tpm_v18_n2.pdf}{Choosing your Workflow Applications}.'' \emph{The Political Methodologist} 18 (2):~9--18. 
+
 \ind Kieran Healy. 2009. \href{http://www.journals.uchicago.edu/doi/pdf/10.1086/605757}{Review} of \emph{Pop Finance} by Brooke Harrington. \emph{American Journal of Sociology} 115:~309--12.
 
 \ind Kieran Healy. 2007. ``\href{http://www.kieranhealy.org/files/reviews/socforum-article.pdf}{A Wealth of Notions}.'' Review
@@ -331,8 +333,7 @@ Siebert. \emph{Australian Review of Public Affairs}, October. Reprinted in the
 \ind  Kieran Healy. 2003. \href{http://links.jstor.org/sici?sici=0094-3061%28200303%2932%3A2%3C252%3AAEATOC%3E2.0.CO%3B2-F}{Review} of \emph{Against Essentialism} by Stephan Fuchs.
 \emph{Contemporary Sociology} 32:~252--254.
 
-\ind  Kieran Healy. 2001. Review of \emph{Market Society} by Don Slater and Fran Tonkiss. \emph{European
-      Economic Sociology Newsletter} 3 (1):~31--32.
+\ind  Kieran Healy. 2001. Review of \emph{Market Society} by Don Slater and Fran Tonkiss. \emph{European Economic Sociology Newsletter} 3 (1):~31--32.
 
 
 \ind  Kieran Healy. 1999. \href{http://links.jstor.org/sici?sici=0094-3061%28199903%2928%3A2%3C210%3ACPRCAS%3E2.0.CO%3B2-C}{Review} of \emph{Comparative Politics} by Mark Irving Lichbach and Alan S.
@@ -342,62 +343,44 @@ Zuckerman. \emph{Contemporary Sociology} 28:~210--211.
 \ind  Kieran Healy. 1998. \href{http://www.kieranhealy.org/files/reviews/rule.pdf}{Review} of \emph{Theory and Progress in Social Science} by James Rule.  \emph{Theory
   and Society}, 27:~435--441.
 
+ 
 % %\end{revnumerate}
  \bigskip
 
 %% Presentations
-\marginhead{{\vskip 0.4em}Invited Talks \newline (Since 2004)}
+\marginhead{\sffamily {\vskip 0.5em}selected \newline invited talks \newline since 2007}
 \medskip
 
-\ind 2009. ``Specialization and Status in Philosophy.'' University of Chicago, Booth School of Business. May.
 
-\ind 2009. ``Specialization and Status in Philosophy.'' University of California, Berkeley. April. 
+\ind ``Classification Situations.'' Yale University Center for Cultural Sociology, 2013.
+ 
+\ind ``Scores and Classes.'' University of Pennsylvania, 2012.
 
-\ind 2009. ``Specialization and Status in Philosophy.'' University of Michigan, \textsc{icos}. April.
+\ind ``The Performativity of Networks.'' Max Planck/Sciences Po Center, Paris, 2012. 
+ 
+\ind ``Specialization and Status in Philosophy.'' Princeton University, 2010. 
 
-\ind 2009. ``Specialization and Status in Philosophy.'' Columbia University. February. 
+\ind Invited Discussant, ``For Love or Money?'', Center for the Interdisciplinary Study of Work and Social Capital, Washington University in St.\,Louis School of Law, 2010. 
 
-\ind 2009. ``The Performativity of Networks.'' Yale University. January.
+\ind ``Gift Fetishism and the Market for Human Organs.'' CAL Visiting Scholar Lecture Series, James Madison University, 2009. 
 
-\ind 2008. ``The Performativity of Networks.'' Stanford University Graduate School of Business. October. 
+\ind ``Specialization and Status in Philosophy.'' University of Chicago, Booth School of Business, 2009. 
 
-\ind 2008. ``The Performativity of Networks.'' Harvard/MIT Joint Seminar in Economic Sociology. March.
+\ind ``Specialization and Status in Philosophy.'' University of California, Berkeley, 2009. 
 
-\ind 2007. ``Specialization and Status in Philosophy.'' University of Notre Dame. November. 
+\ind ``Specialization and Status in Philosophy.'' University of Michigan, ICOS, 2009. 
 
-\ind 2007. ``Last Best Gifts: Altruism and the Market for Human Blood and Organs.'' Center for History, Society and Culure, University of California at Davis. November.
+\ind ``Specialization and Status in Philosophy.'' Columbia University 2009. 
 
-\ind 2007. ``Gift Fetishism and the Market for Human Organs.'' Department of Anthropology, University of Arizona. February. 
+\ind ``The Performativity of Networks.'' Yale University, 2009. 
 
-\ind 2007. ``Presumed Consent Law and Organ Procurement.'' Rogers Program on Law and Society, University of Arizona. January. 
+\ind ``The Performativity of Networks.'' Stanford University Graduate School of Business, 2008. 
 
-\ind 2006. ``The Political Economy of Presumed Consent.'' Institute for Global
-and International Studies, George Washington University. March.
+\ind ``The Performativity of Networks.'' Harvard/MIT Joint Seminar in Economic Sociology, 2008. 
 
-\ind 2005. ``Last Best Gifts: Altruism and the Market for Human Organs.''
-Columbia University School of Business. November. 
+\ind ``Last Best Gifts: Altruism and the Market for Human Blood and Organs.'' Center for History, Society and Culture, University of California at Davis, 2007. 
 
-\ind 2005. ``The Political Economy of Presumed Consent.'' University of California, Los Angeles. May.
-
-\ind 2005. ``Last Best Gifts: Altruism and the Market for Human Organs.''
-University of California, Berkeley. April.
-
-\ind 2005. ``Cadaveric Organ Procurement and Presumed Consent Laws.'' DePaul
-Law Review \& Health Law Institute Symposium on \emph{Precious Commodities: The
-Supply and Demand of Body Parts}. Chicago. March. 
-
-\ind 2005. ``Last Best Gifts: Altruism and the Market for Human 
-Organs.'' University of Washington. February. 
-
-\ind 2004. ``The Institutional Context of Organ Procurement.'' Indiana
-University--Purdue University, Indianapolis. November.
-
-\ind 2004. ``The Political Economy of Presumed Consent.'' \textsc{spt} Program,
-Australian National University, \textsc{rsss}. July. 
-
-\ind 2004. ``Organ Procurement in the United States.'' National University of
-Ireland at Maynooth. April. 
-
+\ind ``Gift Fetishism and the Market for Human Organs.'' Department of Anthropology, University of Arizona, 2007. 
 
 %\end{revnumerate}
 
@@ -405,106 +388,93 @@ Ireland at Maynooth. April.
 
 %\newpage
 
-\marginhead{{\vskip 0.4em}Conference \newline Presentations \newline (Since 2004)}
+\marginhead{\sffamily {\vskip 0.5em}selected \newline conference \newline presentations \newline since 2007}
 \medskip
 
-\ind 2008. Invited speaker, ASA Culture Section 20th Anniversary Symposium, ``Culture and Economy,'' Boston, August.
+\ind ``Dealing with Awkward Relations.'' Conference on New Theoretical Directions in Economic Sociology, Stockholm, September 2013. 
 
-\ind 2008. Invited discussant, conference on Norms and Values, ZiF center, University of Bielefeld, Germany. May. 
+\ind ``Credit Scores and the Moralization of Inequality.'' Annual Meetings of the American Sociological Association, New York, August 2013.
+ 
+\ind ``Channeling Solidarity: Social Organization and Blood Donation in Response to 9/11.'' Annual Meetings of the American Sociological Association, New York, August 2013.
 
-\ind 2007. ``Economic Categories and the Claims of Neoliberal Society.'' Invited Session on Culture and Markets. Annual Meetings of the American Sociological Association, New York. August.
+\ind Invited discussant, ``Religion and Generosity.'' American Sociological Association/American Society for Religion, joint session, Denver, August 2012.
 
-\ind 2007. ``The Performativity of Networks.'' Special Session on Money in Movement: Markets, Circuits and Networks. Annual Meetings of the American Sociological Association, New York. August.
+\ind Invited discussant, ``Philanthrophy and Real Utopia.'' Meetings of the American Sociological Association, Denver, August 2012. 
 
-\ind 2007. Presider, Regular Session on the Sociology of Knowledge. Annual Meetings of the American Sociological Association, New York. August.
+\ind ``Ranking and the Gourmet Report.'' Meetings of the Central Division of the American Philosophical Association, Chicago, 2012. 
 
-\ind 2007. Discussant, Book Panel on Steven Levitt and Stephen Dubner's \emph{Freakonomics}. Annual Meetings of the Eastern Sociological Society, Philadelphia. March.
+\ind ``Dealing with Difficult Relations.'' Annual Meetings of the American Sociological Association, Las Vegas, 2011.
 
-\ind 2006. ``The Political Economy of Presumed Consent.'' Annual Meetings of the American Sociological Association, Montreal. August.
+\ind ``Economic Categories in Neoliberal Society.'' Annual Meetings of the Society for the Advancement of Socio-Economics, Madrid, 2011.
 
-\ind 2006. ``Specialization and Status in Philosophy.'' Annual Meetings of the American Sociological Association, Montreal. August.
+\ind ``Economic Categories in Neoliberal Society.'' Annual Meetings of the Social Science History Association. Chicago, 2011. 
 
-\ind 2006. Discussant, Invited Session on Public Sociology. Annual Meetings of the American Sociological Association, Montreal. August.
+\ind Invited discussant, ``Markets for Health or Healthy Markets?'' Annual Meetings of the American Sociological Association, Atlanta, 2010. 
 
-\ind 2004. Discussant, Regular Session on the Political Economy of the World System. Annual Meetings of the American Sociological Association, San Francisco. August.
+\ind ``Economic Categories and Claims.'' Conference on The Politics of Markets: Controversies, tools and policies, Berkeley, 2009.
 
+\ind Invited speaker, ASA Culture Section 20th Anniversary Symposium, ``Culture and Economy,'' Boston, 2008.
 
-\bigskip
+\ind Invited discussant, conference on Norms and Values, ZiF center, University of Bielefeld, Germany, 2008. 
 
-\marginhead{{\vskip 0.4em}Grants and \newline Awards}
-\medskip
-  
-\ind 2008. Honorable Mention, American Sociological Association Section on Economic Sociology, Zelizer Distinguished Scholarship Award.
+\ind ``Economic Categories and the Claims of Neoliberal Society.'' Invited Session on Culture and Markets. Annual Meetings of the American Sociological Association, New York, 2007.
 
-\ind 2008-09. Residential Fellowship, Center for Advanced Study in the Behavioral Sciences, Stanford University.
+\ind ``The Performativity of Networks.'' Special Session on Money in Movement: Markets, Circuits and Networks. Annual Meetings of the American Sociological Association, New York, 2007.
 
-\ind 2007. Winner, Association for Research on Nonprofit Organizations and Voluntary Action (\textsc{arnova}) Outstanding Book Prize.
+\ind Presider, Regular Session on the Sociology of Knowledge. Annual Meetings of the American Sociological Association, New York, 2007. 
 
-\ind 2007. Finalist, Society for the Study of Social Problems (\textsc{sssp}), C. Wright Mills Award.
-
-\ind 2006. Rogers Program in Law and Society, Faculty Research Award
-(\$3,000), University of Arizona.
-
-\ind 2006. Participant, Summer Institute on \emph{Economy and Society: Trajectories of Capitalism}, Center for Advanced Study in the Behavioral Sciences (July--August).
-
-\ind 2003. University of Arizona \textsc{sbsri}/Center for Applied Spatial
-Analysis. Geographical Information Systems Research Assistance
-Program Award. ``The Geography of Organ Procurement.''
-
-\ind 2002. American Sociological Association Dissertation Award.
-
-\ind 2002. University of Arizona Prop.\,301 Information Technology/Information Science Fund. ``Understanding Open-Source Software Development: Network organizations, innovation and volunteering'' (\$19,500).
-
-\ind 2000. National Science Foundation Doctoral Dissertation Research Improvement Award (\$7,500).
-
-\ind 1998--2000. Graduate Fellow, Fellowship of Woodrow Wilson Scholars. Prize fellowship.
-
-\ind 1998--1999. Noah Cotsen Junior Teaching Fellowship, Princeton University. Prize fellowship.
-
-\ind 1998. Prize Paper, Princeton University Department of Sociology Working Paper Series.
-
-\ind 1998. General Examinations with Distinction, Princeton University.
-
-\ind 1995--1998. Graduate Fellowship, Princeton University.
-
-\ind 1993--1994. Title of College Scholar, University College, Cork.
-
-\ind 1991--1993. College Undergraduate Scholarship, University
-College, Cork.
-
+\ind Discussant, Book Panel on Steven Levitt and Stephen Dubner's \emph{Freakonomics}. Annual Meetings of the Eastern Sociological Society, Philadelphia, 2007. 
 
 \bigskip 
 
-\newpage
+\marginhead{\sffamily {\vskip 0.6em}grants,\newline honors, \newline \& awards}
+\medskip
+
+\ind Residential Fellowship, Center for Advanced Study in the Behavioral Sciences, Stanford University, 2008-09.
+
+\ind Association for Research on Nonprofit Organizations and Voluntary Action (ARNOVA) Outstanding Book Prize, 2007.
+
+\ind Finalist, Society for the Study of Social Problems (SSSP), C. Wright Mills Award, 2007.
+
+\ind Rogers Program in Law and Society, Faculty Research Award, University of Arizona, 2006.
+
+\ind Participant, Summer Institute on \emph{Economy and Society: Trajectories of Capitalism}, Center for Advanced Study in the Behavioral Sciences, 2006.
+
+\ind University of Arizona SBSRI/Center for Applied Spatial
+Analysis. Geographical Information Systems Research Assistance
+Program Award. ``The Geography of Organ Procurement'', 2003.
+
+\ind American Sociological Association, Dissertation Award, 2002.
+
+\ind University of Arizona Prop.\,301 Information Technology/Information Science Fund Award, 2002.
+
+\ind National Science Foundation Doctoral Dissertation Research Improvement Award, 2000.
+
+\ind Graduate Fellow, Fellowship of Woodrow Wilson Scholars, Princeton University,  1998--2000. 
+
+\ind Noah Cotsen Junior Teaching Fellowship, Princeton University, 1998--1999.
+
+\ind General Examinations with Distinction, Princeton University, 1998.
+
+\ind Graduate Fellowship, Princeton University, 1995--1998.
+
+\ind College Scholar, University College, Cork, 1993--1994.
+
+\ind College Undergraduate Scholarship, University
+College, Cork, 1991--1993.
+
+\bigskip 
+
+
+\marginhead{\sffamily {\vskip 1.12em}service to the \newline profession}
+\medskip
+
+\medskip
+
 
 \marginhead{{\vskip 0.9em}Service to the \newline Profession}
 \medskip
 
 \medskip
-
-\ind Consulting Editor (2009--11), \emph{American Journal of Sociology}.
-
-\ind Editorial Board Member (2008--10), \emph{Contexts}. 
-
-\ind Prize Committee, American Sociological Association Section on Economic Sociology, Ronald Burt Prize Paper Award (2007--08).
-
-\ind Elected Council Member, American Sociological Association Section on Economic
-Sociology (2008--2010). 
-
-\ind Co-ordinator of the Society for the Advancement of Socio-Economics' research network on Socio-Economic Theory (2006--2008). 
-
-\ind Editorial Board Member (2007--2009), \emph{Socio-Economic Review}.
-
-\ind Session organizer, Regular Session on Voluntary and Non-Profit organizations, American Sociological Association Meetings, Philadelphia, August 2005.
-
-\ind Co-Editor (with Alexandra Kalev), \emph{Accounts}, Newsletter of the American Sociological Association Section on Economic Sociology (2003--2004 and 2004--2005).
-
-\ind Prize committee, American Sociological Association Theory Section, Graduate Student Paper Award (2003--2004).
-
-\ind Reviewer, National Science Foundation, \emph{American
-  Sociological Review}, \emph{American Journal of Sociology},
-\emph{American Journal of Transplantation}, \emph{Administrative
-  Science Quarterly}, \emph{Bioethics}, \emph{Contexts}, \emph{The Information
-  Society}, \emph{Journal of Health Economics}, \emph{Journal of Political Philosophy}, \emph{Journal for the Scientific Study of Religion}, \emph{Social Networks}, \emph{Socio-Economic Review}, \emph{Sociological Forum}, \emph{Transactions of the Institute of British Geographers}, \emph{Social Science \& Medicine}, \emph{Theory and Society}, Cambridge University Press, University of Chicago Press, Duke University Press, Oxford University Press, Polity Press, Sage Publications/Pine Forge Press.
 
 \end{document}
